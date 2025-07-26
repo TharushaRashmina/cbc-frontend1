@@ -15,7 +15,7 @@ export default function AdminProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 relative">
-        <Link to={"admin/products/addProduct" } claasName="absolute right-[25px] bottom-[25px] text-[25px] 
+        <Link to={"admin/products/addProduct" } className="absolute right-[25px] bottom-[25px] text-[25px] 
         border-[#3b82f6] border-[2px] text-[#3b82f6] p-5 rounded-xl hover:rounded-full"><FaPlus/></Link>
       <h1 className="text-2xl font-bold mb-6 text-center">Admin Products Page</h1>
       <div className="overflow-x-auto">
