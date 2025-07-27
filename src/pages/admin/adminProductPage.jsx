@@ -39,71 +39,81 @@ export default function AdminProductsPage() {
         }}>{test}</button>*/}
 
       <h1 className="text-2xl font-bold mb-6 text-center">Admin Products Page</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700 text-left">
-              <th className="px-4 py-2 border-b">Product ID</th>
-              <th className="px-4 py-2 border-b">Product Name</th>
-              <th className="px-4 py-2 border-b">Price</th>
-              <th className="px-4 py-2 border-b">Last Price</th>
-              <th className="px-4 py-2 border-b">Stock</th>
-              <th className="px-4 py-2 border-b">Description</th>
-              <th className="px-4 py-2 border-b text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product, index) => (
-              <tr
-                key={index}
-                className="hover:bg-gray-50 transition-colors duration-200">
-                <td className="px-4 py-2 border-b">{product.productId}</td>
-                <td className="px-4 py-2 border-b">{product.productName}</td>
-                <td className="px-4 py-2 border-b">{product.price}</td>
-                <td className="px-4 py-2 border-b">{product.lastPrice}</td>
-                <td className="px-4 py-2 border-b">{product.stock}</td>
-                <td className="px-4 py-2 border-b">{product.description}</td>
-                <td className="px-4 py-2 border-b text-center">
-                <div className="flex justify-center gap-4 text-blue-600">
-                        <button className="hover:text-red-600" title="Delete"
-                            onClick={() => {
-                                const token = localStorage.getItem("token");                                
-                                axios.delete(`http://localhost:5000/api/products/${product.productId}`,{
+      
+        {
+            productsLoaded?<div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+              <thead>
+                <tr className="bg-gray-100 text-gray-700 text-left">
+                  <th className="px-4 py-2 border-b">Product ID</th>
+                  <th className="px-4 py-2 border-b">Product Name</th>
+                  <th className="px-4 py-2 border-b">Price</th>
+                  <th className="px-4 py-2 border-b">Last Price</th>
+                  <th className="px-4 py-2 border-b">Stock</th>
+                  <th className="px-4 py-2 border-b">Description</th>
+                  <th className="px-4 py-2 border-b text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product, index) => (
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-50 transition-colors duration-200">
+                    <td className="px-4 py-2 border-b">{product.productId}</td>
+                    <td className="px-4 py-2 border-b">{product.productName}</td>
+                    <td className="px-4 py-2 border-b">{product.price}</td>
+                    <td className="px-4 py-2 border-b">{product.lastPrice}</td>
+                    <td className="px-4 py-2 border-b">{product.stock}</td>
+                    <td className="px-4 py-2 border-b">{product.description}</td>
+                    <td className="px-4 py-2 border-b text-center">
+                    <div className="flex justify-center gap-4 text-blue-600">
+                            <button className="hover:text-red-600" title="Delete"
+                                onClick={() => {
+                                    const token = localStorage.getItem("token");                                
+                                    axios.delete(`http://localhost:5000/api/products/${product.productId}`,{
+    
+                                        headers : {
+    
+                                            Authorization : `Bearer ${token}`,
+                                        },
+                                    }).then(
+                                        (res)=>{
+                                            console.log(res.data);
+                                            toast.success("Product deleted successfully!");
+                                            setProductsLoaded(false);
+                                        }
+                                    );
+                                }}
+                            >
+                                <FaTrash />
+                            </button>
+    
+                            <button
+                                onClick={() => {
+                                console.log("Update clicked for", product.productId);
+                                // You can navigate to update form here
+                                }}
+                                className="hover:text-green-600"
+                                title="Edit"
+                            >
+                                <FaPencilAlt />
+                            </button>
+                    </div>
+    
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>:<div className="w-full h-full flex justify-center items-center">
+            <div className="w-[60px] h-[60px] border-[4px] border-gray-200 border-b-[#3b82f6] 
+            animate-spin rounded-full"></div>
+        </div>
 
-                                    headers : {
-
-                                        Authorization : `Bearer ${token}`,
-                                    },
-                                }).then(
-                                    (res)=>{
-                                        console.log(res.data);
-                                        toast.success("Product deleted successfully!");
-                                        setProductsLoaded(false);
-                                    }
-                                );
-                            }}
-                        >
-                            <FaTrash />
-                        </button>
-
-                        <button
-                            onClick={() => {
-                            console.log("Update clicked for", product.productId);
-                            // You can navigate to update form here
-                            }}
-                            className="hover:text-green-600"
-                            title="Edit"
-                        >
-                            <FaPencilAlt />
-                        </button>
-                </div>
-
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        }
+        
+      
+      
     </div>
   );
 }
