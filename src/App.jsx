@@ -8,6 +8,7 @@ import FileUploadTest from './pages/home/test';
 import AdminProductsPage from './pages/admin/adminProductPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import HomePage from './pages/home/homePage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
       <Toaster position="top-right"/>
       <Routes path="/*">
+      <Route path="/*" element={<HomePage/>}/>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/admin/*" element={<AdminProductsPage/>}/>
       <Route path="/testing" element={<FileUploadTest/>}/>
